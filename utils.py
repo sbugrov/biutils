@@ -18,11 +18,13 @@ def pattern_count(genome, pattern):
         For various biological processes, certain nucleotide strings often
         appear surprisingly often in small regions of the genome.
     '''
+    genome = genome.upper()
+    pattern = pattern.upper()
 
     return sum(pattern == genome[i:i+len(pattern)] for i in xrange(len(genome)-(len(pattern)-1)))
 
 def most_frequent_kmer(genome, k):
-    ''' Finds the most frequent pattern(s) of predetermined length k in 
+    ''' Finds the most frequent pattern(s) of predetermined length k in
         a given genome or region of the genome.
 
     # Arguments
@@ -40,8 +42,22 @@ def most_frequent_kmer(genome, k):
         For various biological processes, certain nucleotide strings often
         appear surprisingly often in small regions of the genome.
     '''
-    
+    genome = genome.upper()
+
     kmers = dict(Counter([genome[i:i+k] for i in range(len(genome)-k-1)]))
     max_count = max(kmers.values())
 
     return [kmer for kmer, count in kmers.iteritems() if count == max_count]
+
+def reverse_complement(strand):
+    ''' Returns reverse complement of a given genome strand
+
+    # Arguments
+
+        strand: a template strand, a string
+    '''
+
+    mapping = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+    strand = strand.upper()
+
+    return ''.join(map(lambda c: mapping[c], strand[::-1]))
