@@ -1,7 +1,7 @@
 from collections import Counter
 
 def pattern_count(genome, pattern):
-    ''' Finds the number of patterns in a given genome or region of the genome.
+    ''' Finds the number of Patterns in a given genome or region of the Genome.
 
     # Arguments
 
@@ -10,7 +10,7 @@ def pattern_count(genome, pattern):
 
     # Returns
 
-        A number of patterns in a given genome or region of the genome.
+        A number of Patterns in a given genome or region of the Genome.
 
     # Note
 
@@ -18,12 +18,14 @@ def pattern_count(genome, pattern):
         For various biological processes, certain nucleotide strings often
         appear surprisingly often in small regions of the genome.
     '''
+    genome = genome.upper()
+    pattern = pattern.upper()
 
     return sum(pattern == genome[i:i+len(pattern)] for i in xrange(len(genome)-(len(pattern)-1)))
 
 def most_frequent_kmer(genome, k):
-    ''' Finds the most frequent pattern(s) of predetermined length k in 
-        a given genome or region of the genome.
+    ''' Finds the most frequent pattern(s) of predetermined length K in
+        a given Genome or region of the genome.
 
     # Arguments
 
@@ -32,7 +34,7 @@ def most_frequent_kmer(genome, k):
 
     # Returns
 
-        A list of the most frequent pattern(s) of predetermined length k.
+        A list of the most frequent pattern(s) of predetermined length K.
 
     # Note
 
@@ -40,8 +42,38 @@ def most_frequent_kmer(genome, k):
         For various biological processes, certain nucleotide strings often
         appear surprisingly often in small regions of the genome.
     '''
-    
+    genome = genome.upper()
+
     kmers = dict(Counter([genome[i:i+k] for i in range(len(genome)-k-1)]))
     max_count = max(kmers.values())
 
     return [kmer for kmer, count in kmers.iteritems() if count == max_count]
+
+def reverse_complement(strand):
+    ''' Returns reverse complement of a given genome Strand
+
+    # Arguments
+
+        strand: a template strand, a string
+    '''
+
+    mapping = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G'}
+    strand = strand.upper()
+
+    return ''.join(map(lambda c: mapping[c], strand[::-1]))
+
+def starting_positions(pattern, genome):
+    ''' Finds all starting positions where Pattern appears as a substring of Genome.
+
+    #Returns
+
+        A list of integers specifying all starting positions where Pattern appears as a substring of Genome.
+
+    # Note
+
+        Patterns may overlap.
+    '''
+    genome = genome.upper()
+    pattern = pattern.upper()
+
+    return [i for i in xrange(len(genome)-(len(pattern)-1)) if (pattern == genome[i:i+len(pattern)])]
