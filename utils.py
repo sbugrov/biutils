@@ -1,4 +1,3 @@
-from collections import Counter
 
 def pattern_count(genome, pattern):
     ''' Finds the number of Patterns in a given genome or region of the Genome.
@@ -43,11 +42,11 @@ def most_frequent_kmer(genome, k):
         appear surprisingly often in small regions of the genome.
     '''
     genome = genome.upper()
+    unique_kmers = set([genome[i:i + k] for i in xrange(len(genome) - (k - 1))])
+    kmer_counts = [(b, pattern_count(genome, b)) for b in unique_kmers]
+    max_count = max([count for (kmer, count) in kmer_counts])
 
-    kmers = dict(Counter([genome[i:i+k] for i in range(len(genome)-k-1)]))
-    max_count = max(kmers.values())
-
-    return [kmer for kmer, count in kmers.iteritems() if count == max_count]
+    return [kmer for (kmer, count) in kmer_counts if count == max_count]
 
 def reverse_complement(strand):
     ''' Returns reverse complement of a given genome Strand
@@ -77,3 +76,24 @@ def starting_positions(pattern, genome):
     pattern = pattern.upper()
 
     return [i for i in xrange(len(genome)-(len(pattern)-1)) if (pattern == genome[i:i+len(pattern)])]
+
+def clump_finding(genome, k, L, t):
+    ''' Finds all patterns of length K forming (L, T)-clumps in a Genome.
+
+     # Arguments
+
+        genome: a string Genome
+        k: length of a pattern
+        L: length of a window
+        t: minimum number of times a pattern appears in a given Genome
+
+     # Returns
+        All distinct K-mers forming (L, T)-clumps in Genome.
+    '''
+    genome = genome.upper()
+    windows = [genome[i:i + L] for i in xrange(len(genome) - (L - 1))]
+    kmers_w = [[window[i:i + k] for i in xrange(len(window) - (k - 1))] for window in windows]
+    kmer_counts_w = [[(b, pattern_count(windows[i], b)) for b in set(kmers_w[i])] for i in xrange(len(kmers_w))]
+    kmer_counts = [[(v, k) for v, k in kmers if k >= t] for kmers in kmer_counts_w]
+
+    return list(set([item[0] for sublist in kmer_counts for item in sublist]))
