@@ -97,3 +97,13 @@ def clump_finding(genome, k, L, t):
     kmer_counts = [[(v, k) for v, k in kmers if k >= t] for kmers in kmer_counts_w]
 
     return list(set([item[0] for sublist in kmer_counts for item in sublist]))
+
+def skew(genome):
+    '''
+
+    '''
+
+    mapping = {'A': 0, 'T': 0, 'G': 1, 'C': -1}
+    genome = genome.upper()
+
+    return sum(map(lambda c: mapping[c], genome))
