@@ -1,4 +1,18 @@
+def composition_k(k, genome):
+    ''' Solve the String Composition Problem.
+    # Arguments
 
+        genome: genome, a string
+        k: length of needed k-mer
+
+    # Returns
+        List of the k-mers ordered in lexicographic order.
+    '''
+    
+    composition = [genome[i:i+k] for i in range(0, len(genome)) if len(genome[i:i+k])==k]
+    
+    return composition.sort()
+    
 def pattern_count(genome, pattern):
     ''' Finds the number of Patterns in a given genome or region of the Genome.
 
