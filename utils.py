@@ -118,3 +118,17 @@ def skew(genome):
     
     return [0] + list(cumulative_sum(mapped_genome))
     
+def positions_of_min_skew(genome):
+    ''' Finds the position(s) where skew function minimum(s) is attained.
+    
+    # Arguments
+
+        genome: a string Genome
+    
+     # Returns
+        List of the position(s) of the minimum(s).
+    '''
+    
+    skew_list = skew(genome)
+    minimum = min(skew_list)
+    return [i for i in range(len(skew_list)) if (skew_list[i]==minimum)]
