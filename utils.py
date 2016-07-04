@@ -9,9 +9,10 @@ def kmers(k, genome):
         List of the k-mers ordered in lexicographic order.
     '''
     
-    composition = [genome[i:i+k] for i in range(0, len(genome)) if len(genome[i:i+k])==k]
-    
-    return composition.sort()
+    result = [genome[i:i+k] for i in xrange(len(genome) - k + 1)]
+    result.sort()
+  
+    return result
     
 def pattern_count(genome, pattern):
     ''' Finds the number of Patterns in a given genome or region of the Genome.
