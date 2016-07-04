@@ -1,4 +1,4 @@
-def composition_k(k, genome):
+def kmers(k, genome):
     ''' Solve the String Composition Problem.
     # Arguments
 
