@@ -1,3 +1,11 @@
+from itertools import product
+
+def all_kmers(k):
+  '''
+  return a list of all possible k-mers
+  '''
+  return [''.join(a) for a in product(['A','C','T','G'], repeat=k)]
+  
 def hamming_distance(a, b):
   '''Compute the Hamming distance between two strings.
   # Arguments
