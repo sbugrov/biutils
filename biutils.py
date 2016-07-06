@@ -26,11 +26,10 @@ def kmers(k, genome):
       genome: genome, a string
       k: length of needed k-mer
   # Returns
-      List of the k-mers ordered in lexicographic order.
+      List of the k-mers.
   '''
 
   result = [genome[i:i+k] for i in xrange(len(genome) - k + 1)]
-  result.sort()
 
   return result
 
