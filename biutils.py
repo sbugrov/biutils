@@ -19,6 +19,34 @@ def rna_to_aa(rna):
     
   return ''.join([rna_codon_table[codon] for codon in rna])
 
+def linear_spectrum(peptide):
+  '''Generates the theoretical spectrum of a cyclic peptide.
+     Input: An amino acid string Peptide.
+     Output: Cyclospectrum(Peptide).
+  '''
+  
+  amino_acid_mass = { 'G' : 57,  'A' : 71,  'S' : 87,  'P' : 97, 'V' : 99,  'T' : 101, 'C' : 103, 'I' : 113, 'L' : 113, 'N' : 114,
+                    'D' : 115, 'K' : 128, 'Q' : 128, 'E' : 129,'M' : 131, 'H' : 137, 'F' : 147, 'R' : 156, 'Y' : 163, 'W' : 186}
+  
+  prefix_mass = [0]
+  
+  for i in xrange(1, len(peptide) + 1):
+    prefix_mass.append(prefix_mass[i-1] + amino_acid_mass[peptide[i-1]])
+   
+  linear_spectrum = [0]
+  
+  for i in xrange(1, len(peptide)+1):
+    for j in xrange(i + 1, len(peptide)+1):
+      linear_spectrum.append(prefix_mass[j] - prefix_mass[i])
+      print prefix_mass[j] - prefix_mass[i]
+      
+  ls = (linear_spectrum + prefix_mass[1:])
+  ls.sort()
+  
+  return ls
+  
+print linear_spectrum('NQEL') 
+
 def all_kmers(k):
   '''
   return a list of all possible k-mers
