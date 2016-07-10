@@ -188,23 +188,18 @@ def positions_of_min_skew(genome):
   minimum = min(skew_list)
   return [i for i in range(len(skew_list)) if (skew_list[i]==minimum)]
 
-def debruijn(edges):
+def build_de_bruijn_graph(edges):
   '''
   Construct the de Bruijn graph from a set of k-mers.
   Input: A collection of k-mers Patterns.
   Output: De Bruijn graph. Format of the graph:
-
-  de_bruijn_graph: [nodes = [], edges = []}
-  node: [node, edges = [], degree = |edges|, degreeUnvisited = |edges.visited == false|]
-  edge: [edge, nodes = [], visited = False]
+  
+  de_bruijn_graph: {node: [outs]}
   '''
-
+  
   ins = [edge[:-1] for edge in edges]
   unque_ins = set(ins)
-  nodes = [[unque_in, [edge[1:] for edge in edges if edge[:-1] == unque_in], len(['dummy' for edge in edges if (edge[:-1] == unque_in or edge[1:] == unque_in)])] for unque_in in unque_ins]
-  nodes = [[node[0], node[1], node[2], node[2]] for node in nodes]
-  edges = [[edge, [edge[:-1], edge[1:]], False] for edge in edges]
-
-  de_bruijn = [nodes, edges]
-
-  return de_bruijn
+  de_bruijn_graph = {unque_in: [edge[1:] for edge in edges if edge[:-1] == unque_in] for unque_in in unque_ins}
+ 
+  return de_bruijn_graph
+  
