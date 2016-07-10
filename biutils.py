@@ -218,7 +218,7 @@ def find_eulerian_path(graph):
   def find_new_starting_point():
     if len(cycle) == 0:
       cycle.append('AAG') # append the first node
-      return 'AAG'
+      return 'AAG' # return the first node
     else:
       for node in cycle:
         if len(graph[node]) > 0:
