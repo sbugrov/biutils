@@ -203,3 +203,54 @@ def build_de_bruijn_graph(edges):
  
   return de_bruijn_graph
   
+def find_eulerian_path(graph):
+  '''
+  '''
+  
+  eulerian_path = graph.values()
+  eulerian_path = [item for sublist in eulerian_path for item in sublist]
+  unque_nodes = set(eulerian_path)
+  visits_left = {node: eulerian_path.count(node) for node in unque_nodes}
+  cycle = []
+  graph['AGA'] = graph['AGA'] + ['AAG'] # figure out the first and the last node instead
+  print graph
+  
+  def find_new_starting_point():
+    if len(cycle) == 0:
+      cycle.append('AAG') # append the first node
+      return 'AAG'
+    else:
+      for node in cycle:
+        if len(graph[node]) > 0:
+          return node
+      return 0
+    
+  def append_node(cycle, position, new_node): # needs improvement
+    cycle.append(new_node)
+    return cycle
+    
+    
+  while(True):
+    new_startring_point = find_new_starting_point()
+    
+    if (new_startring_point == 0):
+      break
+          
+    while(True):
+      next_step = graph[new_startring_point][0]
+      
+      if len(graph[new_startring_point]) > 1:
+        graph[new_startring_point] = graph[new_startring_point][1:]
+      else:
+        graph[new_startring_point] = []
+      
+      if len(graph[next_step]) == 0:
+        cycle = append_node(cycle, 'here must be something, a position', next_step)
+        break
+        
+      cycle = append_node(cycle, 'here must be something a position', next_step)
+      new_startring_point = next_step
+        
+  eulerian_path = cycle
+  
+  return eulerian_path
