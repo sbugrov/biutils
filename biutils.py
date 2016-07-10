@@ -58,11 +58,24 @@ def hamming_distance(a, b):
   # Returns
       The Hamming distance between strings A and B.
   '''
-  
-  if len(a) == len(b):
-    return sum([a[i] != b[i] for i in xrange(len(a))])
-  else:
-    raise ValueError('The lengths of the two strings are not equal!')
+  length = len(a)
+  distance = length
+  for i in range(length):
+      distance -= a[i] == b[i]
+  return distance
+
+def pattern_matching_with_difference (pattern, sequence, difference):
+  ''' Returns all starting positions where Pattern appears 
+  as an approximate substring of Sequence with a at most 'd' character difference
+  '''
+  p_len = len(pattern)
+  s_len = len(sequence)
+  match = []
+  for i in range(s_len - p_len + 1):
+    if hamming_distance(sequence[i:i+p_len],pattern) <= d:
+      match.append(i)
+            
+  return match
 
 def kmers(k, genome):
   ''' Solve the String Composition Problem.
