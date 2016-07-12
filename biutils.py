@@ -22,7 +22,7 @@ def rna_to_aa(rna):
 
 def linear_spectrum(peptide):
   
-  '''Generate the theoretical spectrum of a cyclic peptide.
+  '''Generate the theoretical spectrum of a linear peptide.
      Input: An amino acid string Peptide.
      Output: Cyclospectrum(Peptide).
   '''
