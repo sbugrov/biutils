@@ -42,8 +42,6 @@ def linear_spectrum(peptide):
   prefix_mass.sort()
   
   return prefix_mass
-  
-print linear_spectrum('NQEL') 
 
 def all_kmers(k):
   '''
