@@ -267,3 +267,28 @@ def find_eulerian_path(graph):
   eulerian_path = cycle
   
   return eulerian_path
+
+def best_match(motif, sequence):
+  ''' Returns a substring of the Sequence that has the lowest
+      number of differences with the Motif
+  '''
+
+  def hamming_distance(a, b):
+    length = len(a)
+    distance = length
+    for i in range(length):
+      distance -= a[i] == b[i]
+    return distance
+
+  p_len = len(pattern)
+  s_len = len(sequence)
+  best_match = sequence[0:p_len]
+  best_distance = p_len
+
+  for i in range(s_len - p_len + 1):
+    h_d = hamming_distance(sequence[i:i+p_len],pattern)
+    if h_d < best_distance:
+      match = sequence[i:i+p_len]
+      best_distance = h_d
+
+  return match
