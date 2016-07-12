@@ -1,4 +1,5 @@
 from itertools import product
+import numpy as np
 
 def rna_to_aa(rna):
   ''' Translate an RNA string into an amino acid string.
@@ -292,3 +293,20 @@ def best_match(motif, sequence):
       best_distance = h_d
 
   return match
+
+def profile(motifs):
+  '''
+  '''
+  
+  mapping = {'A': [1, 0, 0, 0], 'C': [0, 1, 0, 0], 'G': [0, 0, 1, 0], 'T': [0, 0, 0, 1]}
+  n_motifs = len(motifs)
+  motif_len = len(motifs[0])
+  profile = np.ones([4, motif_len])
+  
+  for i in xrange(n_motifs):
+    for j in xrange(motif_len):
+      profile[:, j] += mapping[motifs[i][j]]
+      
+  return profile
+
+print profile(motifs)
