@@ -280,13 +280,13 @@ def best_match(motif, sequence):
       distance -= a[i] == b[i]
     return distance
 
-  p_len = len(pattern)
+  p_len = len(motif)
   s_len = len(sequence)
   best_match = sequence[0:p_len]
   best_distance = p_len
 
   for i in range(s_len - p_len + 1):
-    h_d = hamming_distance(sequence[i:i+p_len],pattern)
+    h_d = hamming_distance(sequence[i:i+p_len], motif)
     if h_d < best_distance:
       match = sequence[i:i+p_len]
       best_distance = h_d
