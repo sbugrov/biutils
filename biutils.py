@@ -72,19 +72,25 @@ def cyclic_spectrum(peptide):
   
   return prefix_mass
 
-def score_spectrum(peptide, spectrum):
+def score_spectrum(peptide, spectrum, cyclic=True):
   ''' Returns the number of matches between the theoretical
-      spectrum of a given cyclic Peptide and the given experimental Spectrum.
+      spectrum of a given Cyclic or linear Peptide and the given experimental Spectrum.
   '''
   
   score = 0
-  peptide = cyclic_spectrum(peptide)
+  
+  if cyclic:
+    peptide = cyclic_spectrum(peptide)
+  else:
+    peptide = linear_spectrum(peptide)
+    
   for i in xrange(len(peptide)):
     for j in xrange(len(spectrum)):
       if peptide[i] == spectrum[j]:
         score += 1
         del spectrum[j]
         break
+        
   return score
 
 def all_kmers(k):
