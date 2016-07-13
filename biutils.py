@@ -42,6 +42,50 @@ def linear_spectrum(peptide):
   prefix_mass.sort()
   
   return prefix_mass
+  
+def cyclic_spectrum(peptide):
+  
+  '''Generate the theoretical spectrum of a cyclic peptide.
+     Input: An amino acid string Peptide.
+     Output: Cyclospectrum(Peptide).
+  '''
+  
+  amino_acid_mass = { 'G' : 57,  'A' : 71,  'S' : 87,  'P' : 97, 'V' : 99,  'T' : 101, 'C' : 103, 'I' : 113, 'L' : 113, 'N' : 114,
+                      'D' : 115, 'K' : 128, 'Q' : 128, 'E' : 129,'M' : 131, 'H' : 137, 'F' : 147, 'R' : 156, 'Y' : 163, 'W' : 186}
+  
+  prefix_mass = [0]
+  
+  peptide_length = len(peptide)
+  
+  for i in xrange(1, peptide_length + 1):
+    prefix_mass.append(prefix_mass[i-1] + amino_acid_mass[peptide[i-1]])
+  
+  total_peptide_mass = prefix_mass[peptide_length]
+  
+  for i in xrange(1, peptide_length+1):
+    for j in xrange(i + 1, peptide_length+1):
+      prefix_mass.append(prefix_mass[j] - prefix_mass[i])
+      if i > 0 and j < peptide_length:
+        prefix_mass.append(total_peptide_mass - (prefix_mass[j] - prefix_mass[i]))
+        
+  prefix_mass.sort()
+  
+  return prefix_mass
+
+def score_spectrum(peptide, spectrum):
+  ''' Returns the number of matches between the theoretical
+      spectrum of a given cyclic Peptide and the given experimental Spectrum.
+  '''
+  
+  score = 0
+  peptide = cyclic_spectrum(peptide)
+  for i in xrange(len(peptide)):
+    for j in xrange(len(spectrum)):
+      if peptide[i] == spectrum[j]:
+        score += 1
+        del spectrum[j]
+        break
+  return score
 
 def all_kmers(k):
   '''
