@@ -358,3 +358,32 @@ def profile(motifs):
   return profile
 
 print profile(motifs)
+
+def greedy_sorting_reversal_distance(permutation):
+  '''Implements Greedy Sorting Algorithm
+  Input: A Permutation, a list of integers
+  Output: A reversal distance between the given sequence and the identity seqence
+  '''
+  
+  distance = 0
+  permutations = [permutation]  
+  perm_len = len(permutation)
+                 
+  for i in xrange(1, perm_len+1): 
+    if permutation[i-1] == -i:                 
+        distance += 1                 
+        permutation[i-1] *= -1
+        permutations.append(permutation)
+    elif permutation[i-1] != i:                 
+      for j in xrange(i, perm_len+1):                 
+        if abs(permutation[j-1]) == i:
+          distance += 1
+          permutation = permutation[0:i-1]+map(lambda x: x * -1, reversed(permutation[i-1:j]))+permutation[j:perm_len+1]
+          permutations.append(permutation)
+          break
+      if permutation[i-1] == -i:                 
+        distance += 1                 
+        permutation[i-1] *= -1
+        permutations.append(permutation)
+                     
+  return distance
