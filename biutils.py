@@ -387,3 +387,18 @@ def greedy_sorting_reversal_distance(permutation):
         permutations.append(permutation)
                      
   return distance
+
+def get_breakpoints_count(permutation):
+  '''Number of Breakpoints Problem: Find the number of breakpoints in a permutation.
+     Input: A permutation.
+     Output: The number of breakpoints in this permutation.
+  '''
+  
+  number_of_breakpoints = 0
+  permutation = [0] + permutation + [perm_len+1]
+  
+  for i in xrange(1, len(permutation)):
+    if permutation[i] - permutation[i-1] != 1:
+      number_of_breakpoints += 1
+      
+  return number_of_breakpoints
